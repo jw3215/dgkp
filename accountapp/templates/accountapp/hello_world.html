@@ -11,5 +11,12 @@
   <h1>
     tasting
   </h1>
+  <form action="/account/hello_world/" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-primary" value="post">
+  </form>
+  <h1>
+    {{ text }}
+  </h1>
 </div>
 {% endblock %}
