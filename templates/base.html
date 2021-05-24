@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
-  {% include "head.html" %}
+{% include "head.html" %}
 
-  <body>
-    {% include "header.html" %}
+<body>
+  {% include "header.html" %}
 
-    {% block content %}
-    {% endblock  %}
-    
+  <hr>
+  {% block content %}
+  {% endblock  %}
+  <hr>
 
-    {% include "footer.html" %}
-  </body>
+  {% include "footer.html" %}
+</body>
+
 </html>
