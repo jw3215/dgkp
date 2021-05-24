@@ -23,13 +23,20 @@
     </div>
   </form>
 
-  {% if hello_world_output %}
+  {% comment %} {% if hello_world_output %}
   <h1>
     {{ hello_world_output }}
   </h1>
-  <h3>
+  <h4>
     {{ hello_world_output.text }}
-  </h3>
-  {% endif %}
+  </h4>
+  {% endif %} {% endcomment %}
+  <div>
+    {{ hello_world_list }}
+  </div>
+
+  {% for ele in hello_world_list %}
+  <h2>{{ele.text}}</h2>
+  {% endfor %}
 </div>
 {% endblock %}
