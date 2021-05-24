@@ -1,0 +1,20 @@
+.dgkp_header {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.dgkp_header_title {
+  font-family: "Quicksand", sans-serif;
+}
+
+.dgkp_footer {
+  text-align: center;
+  margin: 2rem 0;
+}
+.dgkp_footer_logo {
+  margin-top: 0.6rem;
+  font-family: "Quicksand", sans-serif;
+}
+.dgkp_footer_btn {
+  font-size: 0.6rem;
+}
