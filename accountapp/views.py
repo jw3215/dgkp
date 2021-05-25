@@ -1,14 +1,22 @@
+from accountapp.decorators import account_ownership_required
+from typing import Any
 from accountapp.forms import AccountUpdateForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls.base import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from accountapp.models import HelloWorld
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.request import HttpRequest
 from django.shortcuts import render, resolve_url
 
+has_ownership = [login_required, account_ownership_required]
 
+
+@login_required
 def hello_world(request):
     if request.method == "POST":
         temp = request.POST.get("hello_world_input")
@@ -20,11 +28,10 @@ def hello_world(request):
         return HttpResponseRedirect(reverse("accountapp:hello_world"))
     else:
         hello_world_list = HelloWorld.objects.all()
-
         return render(
             request,
             "accountapp/hello_world.html",
-            context={"text": "GET METHOD!!!", "hello_world_list": hello_world_list,},
+            context={"hello_world_list": hello_world_list,},
         )
 
 
@@ -41,6 +48,8 @@ class AccountDetailView(DetailView):
     template_name = "accountapp/detail.html"
 
 
+@method_decorator(has_ownership, "get")
+@method_decorator(has_ownership, "post")
 class AccountUpdateView(UpdateView):
     model = User
     context_object_name = "target_user"
@@ -49,6 +58,8 @@ class AccountUpdateView(UpdateView):
     template_name = "accountapp/update.html"
 
 
+@method_decorator(has_ownership, "get")
+@method_decorator(has_ownership, "post")
 class AccountDeleteView(DeleteView):
     model = User
     context_object_name = "target_user"
