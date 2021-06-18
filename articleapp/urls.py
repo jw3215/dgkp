@@ -1,6 +1,7 @@
 from django.urls.conf import path
 from django.views.generic import TemplateView
 
+app_name = "articleapp"
 
 urlpatterns = [
     path(
