@@ -50,6 +50,10 @@
 
         {% endif %}
     </div>
+
+    <div>
+        {% include 'snippets/list_dgkp.html' with article_list=object_list %}
+    </div>
 </div>
 
 {% endblock content %}

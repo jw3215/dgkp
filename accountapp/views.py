@@ -8,10 +8,12 @@ from django.utils.decorators import method_decorator
 from django.urls.base import reverse, reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import MultipleObjectMixin
 from accountapp.models import HelloWorld
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.http.request import HttpRequest
 from django.shortcuts import render, resolve_url
+from articleapp.models import Article
 
 has_ownership = [login_required, account_ownership_required]
 
@@ -31,7 +33,9 @@ def hello_world(request):
         return render(
             request,
             "accountapp/hello_world.html",
-            context={"hello_world_list": hello_world_list,},
+            context={
+                "hello_world_list": hello_world_list,
+            },
         )
 
 
@@ -42,10 +46,18 @@ class AccountCreateView(CreateView):
     template_name = "accountapp/create.html"
 
 
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     model = User
     context_object_name = "target_user"
     template_name = "accountapp/detail.html"
+
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        object_list = Article.objects.filter(writer=self.get_object())
+        return super(AccountDetailView, self).get_context_data(
+            object_list=object_list, **kwargs
+        )
 
 
 @method_decorator(has_ownership, "get")
